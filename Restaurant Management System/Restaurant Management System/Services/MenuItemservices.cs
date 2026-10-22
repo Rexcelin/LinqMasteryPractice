@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RestaurantManagementSystem.Models;
+using RestaurantManagementSystem.Exceptions;
 
 namespace RestaurantManagementSystem.Services
 {
@@ -55,7 +56,14 @@ namespace RestaurantManagementSystem.Services
 
         public MenuItem? GetItem(int id)
         {
-            return MenuItems.FirstOrDefault(item => item.ItemId == id);
+            MenuItem item = MenuItems.FirstOrDefault(x => x.ItemId == id);
+
+            if (item == null)
+            {
+                throw new InvalidMenuItemException("Menu item ID not found");
+            }
+
+            return item;
         }
 
         public void SearchItem()
